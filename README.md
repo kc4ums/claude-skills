@@ -15,9 +15,13 @@ A collection of custom slash commands for [Claude Code](https://claude.ai/code).
 
 ## How to Install a Skill
 
-You can install skills without ever leaving Claude Code. Paste any of the commands below directly into a Claude Code chat using the `!` prefix to run them in your terminal.
+> **Requires Claude Code** — these commands use the `!` prefix to run PowerShell in your terminal. They will not work in regular Claude chat at claude.ai. [Get Claude Code here.](https://claude.ai/code)
+
+Paste any of the commands below directly into a **Claude Code** chat window.
 
 ### See what's available
+
+Type this into a Claude Code chat (the `!` tells Claude Code to run it in your terminal):
 
 ```
 ! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
