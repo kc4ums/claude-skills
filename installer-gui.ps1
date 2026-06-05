@@ -6,7 +6,7 @@ $skillsDir = "$env:USERPROFILE\.claude\skills"
 
 # ── Form ──────────────────────────────────────────────────────────────────────
 $form                  = New-Object System.Windows.Forms.Form
-$form.Text             = "Claude Skills Installer"
+$form.Text             = "kc4ums/claude-skills — Skill Installer"
 $form.Size             = New-Object System.Drawing.Size(520, 440)
 $form.StartPosition    = "CenterScreen"
 $form.FormBorderStyle  = "FixedDialog"
@@ -16,7 +16,7 @@ $form.BackColor        = [System.Drawing.Color]::White
 
 # ── Header ────────────────────────────────────────────────────────────────────
 $header          = New-Object System.Windows.Forms.Label
-$header.Text     = "Claude Skills Installer"
+$header.Text     = "kc4ums/claude-skills"
 $header.Location = New-Object System.Drawing.Point(15, 12)
 $header.Size     = New-Object System.Drawing.Size(480, 22)
 $header.Font     = New-Object System.Drawing.Font("Segoe UI", 12, [System.Drawing.FontStyle]::Bold)

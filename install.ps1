@@ -78,22 +78,31 @@ if ($Skill) {
     exit 0
 }
 
-# ── Interactive numbered menu ─────────────────────────────────────────────────
-Show-Menu
-$choice = Read-Host "Enter a number or A to install all"
-
-if ($choice -match "^[Aa]$") {
-    Do-Install ($manifest.skills | ForEach-Object { $_.name })
-    exit 0
-}
-
-$idx = $null
-if ([int]::TryParse($choice, [ref]$idx) -and $idx -ge 1 -and $idx -le $manifest.skills.Count) {
-    $selected = $manifest.skills[$idx - 1]
-    Do-Install @($selected.name)
-    exit 0
-}
-
-Write-Host "Invalid choice. Run the script again and enter a number from the list." -ForegroundColor DarkOrange
+# ── Interactive numbered menu (loops until Q) ─────────────────────────────────
 Write-Host ""
-exit 1
+Write-Host "kc4ums/claude-skills — Skill Installer" -ForegroundColor Cyan
+
+while ($true) {
+    Show-Menu
+    $choice = Read-Host "Enter a number, A for all, or Q to quit"
+
+    if ($choice -match "^[Qq]$") {
+        Write-Host "Bye!" -ForegroundColor Gray
+        Write-Host ""
+        exit 0
+    }
+
+    if ($choice -match "^[Aa]$") {
+        Do-Install ($manifest.skills | ForEach-Object { $_.name })
+        continue
+    }
+
+    $idx = $null
+    if ([int]::TryParse($choice, [ref]$idx) -and $idx -ge 1 -and $idx -le $manifest.skills.Count) {
+        Do-Install @($manifest.skills[$idx - 1].name)
+        continue
+    }
+
+    Write-Host "Invalid — enter a number from the list, A for all, or Q to quit." -ForegroundColor DarkOrange
+    Write-Host ""
+}
