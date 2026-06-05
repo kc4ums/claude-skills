@@ -24,7 +24,6 @@
     .desc{color:#555;margin-top:4px;font-size:.95rem;line-height:1.5}
     footer{text-align:center;padding:24px 16px 40px;color:#888;font-size:.9rem}
     footer a{color:#1e88e5;text-decoration:none}
-    button.btn{border:none;cursor:pointer}
   </style>
 </head>
 <body>
@@ -35,16 +34,7 @@
 <div class="wrap">
   <div class="card" style="text-align:center">
     <h2>Download the Installer</h2>
-    <button class="btn" onclick="
-      fetch('https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.bat')
-        .then(r=>r.blob())
-        .then(b=>{
-          var a=document.createElement('a');
-          a.href=URL.createObjectURL(b);
-          a.download='install.bat';
-          a.click();
-        });
-    ">Download install.bat</button>
+    <a class="btn" href="https://github.com/kc4ums/claude-skills/releases/download/v1.0/install.bat">Download install.bat</a>
     <div class="alert">
       <strong>Windows will show a security warning</strong> when you run this file &mdash; that is normal.<br><br>
       When the blue screen appears, click <strong>More info</strong>, then click <strong>Run anyway</strong>.
