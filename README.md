@@ -1,82 +1,53 @@
 # Claude Skills
 
-A collection of custom slash commands for [Claude Code](https://claude.ai/code).
+Extra slash commands you can add to [Claude Code](https://claude.ai/code).
 
 ---
 
-## Skills
+## What's available
 
-| Skill | Command | Description |
-|-------|---------|-------------|
-| [bible-verses](./bible-verses/) | `/bible-verses` | Get 5 Bible verses related to how you're feeling |
-| [osha-wood-mill](./osha-wood-mill/) | `/osha-wood-mill` | OSHA regulatory briefing for wood mill / sawmill safety officers |
+| Command | What it does |
+|---------|-------------|
+| `/bible-verses` | Type how you're feeling — get 5 relevant Bible verses |
+| `/osha-wood-mill` | Get a current OSHA regulatory briefing for wood mill safety |
 
 ---
 
-## How to Install a Skill
+## How to install
 
-> **Requires Claude Code** — these commands use the `!` prefix to run PowerShell in your terminal. They will not work in regular Claude chat at claude.ai. [Get Claude Code here.](https://claude.ai/code)
+> **You need Claude Code** — the desktop app or CLI, not regular Claude chat at claude.ai. [Download Claude Code here.](https://claude.ai/code)
 
-Paste any of the commands below directly into a **Claude Code** chat window.
+**Step 1** — Open Claude Code and start a new chat.
 
-### See what's available
-
-Type this into a Claude Code chat (the `!` tells Claude Code to run it in your terminal):
-
-```
-! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
-```
-
-### Install one skill
+**Step 2** — Copy and paste this line into the chat, then press Enter:
 
 ```
 ! $env:SKILL="osha-wood-mill"; irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
 ```
 
-Replace `osha-wood-mill` with any skill name from the table above.
+Replace `osha-wood-mill` with whichever skill you want. To install everything at once, use `all` instead of a skill name.
 
-### Install all skills at once
+**Step 3** — Start a new chat. The skill is ready to use.
 
-```
-! $env:SKILL="all"; irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
-```
-
-### After installing
-
-Start a new Claude Code conversation — that's it. Claude Code automatically scans the skills folder on startup, no configuration needed.
-
-> **Note:** Skills only need to be installed once and are available in every future conversation automatically.
-
-### Manual install (if you prefer)
-
-Skills are plain markdown files. Copy any `SKILL.md` into `%USERPROFILE%\.claude\skills\<skill-name>\` on Windows or `~/.claude/skills/<skill-name>/` on macOS/Linux.
+That's it. No downloads, no setup, no configuration files.
 
 ---
 
-## Usage
+## Using a skill
 
-### `/bible-verses`
-
-Describe how you're feeling and receive 5 relevant Bible verses with references and explanations.
-
-```
-/bible-verses I feel anxious and overwhelmed at work
-/bible-verses tired and burned out
-/bible-verses grateful but unworthy
-```
-
-### `/osha-wood-mill`
-
-Get a live-searched regulatory briefing covering OSHA rule changes, enforcement alerts, and safety updates relevant to wood mill and sawmill operations. Optionally specify a timeframe.
+Once installed, just type the slash command in any Claude Code chat:
 
 ```
 /osha-wood-mill
-/osha-wood-mill past 6 months
-/osha-wood-mill 2024
+/bible-verses I feel overwhelmed
 ```
 
 ---
 
-## Contributing
+## Not sure which skill name to use?
 
-Have a skill to share? Open a pull request — add a new folder with a `SKILL.md` file following the same format as the existing skills.
+Paste this into Claude Code to see the full list:
+
+```
+! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
+```
