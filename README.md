@@ -33,7 +33,7 @@ No PowerShell setup required — the `.bat` handles everything automatically.
 Paste this into a Claude Code chat and press Enter — a small installer window will pop up:
 
 ```
-! $f="$env:TEMP\ccgui.ps1"; iwr https://raw.githubusercontent.com/kc4ums/claude-skills/main/installer-gui.ps1 -OutFile $f; Start-Process powershell "-ExecutionPolicy Bypass -WindowStyle Hidden -File `"$f`""
+! iwr https://raw.githubusercontent.com/kc4ums/claude-skills/main/installer-gui.ps1 -OutFile "$env:TEMP\ccgui.ps1"; Start-Process powershell "-ExecutionPolicy Bypass -WindowStyle Hidden -File `"$env:TEMP\ccgui.ps1`""
 ```
 
 Check the skills you want and click **Install Selected** or **Install All**. Already-installed skills are labeled **[installed]**. No dependencies — uses built-in Windows tools only.
@@ -43,7 +43,7 @@ Check the skills you want and click **Install Selected** or **Install All**. Alr
 Paste this into a Claude Code chat and press Enter:
 
 ```
-! iwr https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
+! iwr https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; powershell -ExecutionPolicy Bypass -File "$env:TEMP\ccinstall.ps1"
 ```
 
 It will show a numbered list of available skills. Type a number and press Enter to install that skill, or type **A** to install all of them. Then start a new Claude Code chat — the skill is ready to use.
