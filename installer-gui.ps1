@@ -6,7 +6,7 @@ $skillsDir = "$env:USERPROFILE\.claude\skills"
 
 # ── Form ──────────────────────────────────────────────────────────────────────
 $form                  = New-Object System.Windows.Forms.Form
-$form.Text             = "kc4ums/claude-skills — Skill Installer"
+$form.Text             = "kc4ums/claude-skills -Skill Installer"
 $form.Size             = New-Object System.Drawing.Size(520, 440)
 $form.StartPosition    = "CenterScreen"
 $form.FormBorderStyle  = "FixedDialog"
@@ -93,7 +93,7 @@ function Load-Skills {
         foreach ($skill in $manifest.skills) {
             $installed = Test-Path "$skillsDir\$($skill.name)\SKILL.md"
             $tag       = if ($installed) { "  [installed]" } else { "" }
-            $display   = "/$($skill.name)$tag  —  $($skill.description)"
+            $display   = "/$($skill.name)$tag  - $($skill.description)"
             $skillMap[$display] = $skill.name
             $list.Items.Add($display, $false) | Out-Null
         }
@@ -101,7 +101,7 @@ function Load-Skills {
         $btnAll.Enabled     = $true
         Set-Status "$($manifest.skills.Count) skill(s) found. Items marked [installed] are already set up."
     } catch {
-        Set-Status "Could not load skills — check your internet connection." "Red"
+        Set-Status "Could not load skills -check your internet connection." "Red"
     }
 }
 

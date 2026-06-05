@@ -32,7 +32,7 @@ function Show-Menu {
     foreach ($s in $manifest.skills) {
         $tag = if (Test-Path "$skillsDir\$($s.name)\SKILL.md") { " [installed]" } else { "" }
         Write-Host "  $i. /$($s.name)$tag" -ForegroundColor Yellow -NoNewline
-        Write-Host " — $($s.description)"
+        Write-Host " -$($s.description)"
         $i++
     }
     Write-Host "  A. All skills"
@@ -80,7 +80,7 @@ if ($Skill) {
 
 # ── Interactive numbered menu (loops until Q) ─────────────────────────────────
 Write-Host ""
-Write-Host "kc4ums/claude-skills — Skill Installer" -ForegroundColor Cyan
+Write-Host "kc4ums/claude-skills -Skill Installer" -ForegroundColor Cyan
 
 while ($true) {
     Show-Menu
@@ -103,6 +103,6 @@ while ($true) {
         continue
     }
 
-    Write-Host "Invalid — enter a number from the list, A for all, or Q to quit." -ForegroundColor DarkOrange
+    Write-Host "Invalid -enter a number from the list, A for all, or Q to quit." -ForegroundColor DarkOrange
     Write-Host ""
 }
