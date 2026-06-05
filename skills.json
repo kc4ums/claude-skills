@@ -1,0 +1,12 @@
+{
+  "skills": [
+    {
+      "name": "bible-verses",
+      "description": "Get 5 Bible verses related to how you're feeling"
+    },
+    {
+      "name": "osha-wood-mill",
+      "description": "OSHA regulatory briefing for wood mill / sawmill safety officers"
+    }
+  ]
+}
