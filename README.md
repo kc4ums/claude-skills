@@ -19,15 +19,21 @@ Extra slash commands you can add to [Claude Code](https://claude.ai/code).
 
 **Step 1** — Open Claude Code and start a new chat.
 
-**Step 2** — Copy and paste this line into the chat, then press Enter:
+**Step 2** — Copy and paste this into the chat to see all available skills, then press Enter:
+
+```
+! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
+```
+
+**Step 3** — Install the skill you want by pasting this, then press Enter:
 
 ```
 ! $env:SKILL="osha-wood-mill"; irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
 ```
 
-Replace `osha-wood-mill` with whichever skill you want. To install everything at once, use `all` instead of a skill name.
+Replace `osha-wood-mill` with the skill name you want. To install everything at once, use `all` instead of a skill name.
 
-**Step 3** — Start a new chat. The skill is ready to use.
+**Step 4** — Start a new chat. The skill is ready to use.
 
 That's it. No downloads, no setup, no configuration files.
 
@@ -42,12 +48,3 @@ Once installed, just type the slash command in any Claude Code chat:
 /bible-verses I feel overwhelmed
 ```
 
----
-
-## Not sure which skill name to use?
-
-Paste this into Claude Code to see the full list:
-
-```
-! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
-```
