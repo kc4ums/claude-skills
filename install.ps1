@@ -1,5 +1,5 @@
 # Claude Code Skill Installer
-# Run interactively:  irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
+# Run interactively:  iwr https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
 # Install directly:   ... & "$env:TEMP\ccinstall.ps1" -Skill osha-wood-mill
 # Install all:        ... & "$env:TEMP\ccinstall.ps1" -Skill all
 
