@@ -22,16 +22,16 @@ Extra slash commands you can add to [Claude Code](https://claude.ai/code).
 **Step 2** — Copy and paste this into the chat to see all available skills, then press Enter:
 
 ```
-! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
+! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
 ```
 
 **Step 3** — Install the skill you want by pasting this, then press Enter:
 
 ```
-! $env:SKILL="osha-wood-mill"; irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 | iex
+! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1" -Skill osha-wood-mill
 ```
 
-Replace `osha-wood-mill` with the skill name you want. To install everything at once, use `all` instead of a skill name.
+Replace `osha-wood-mill` with the skill name you want. To install everything at once, use `-Skill all`.
 
 **Step 4** — Start a new chat. The skill is ready to use.
 
