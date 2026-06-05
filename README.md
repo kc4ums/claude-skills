@@ -17,25 +17,25 @@ Extra slash commands you can add to [Claude Code](https://claude.ai/code).
 
 > **You need Claude Code** — the desktop app or CLI, not regular Claude chat at claude.ai. [Download Claude Code here.](https://claude.ai/code)
 
-**Step 1** — Open Claude Code and start a new chat.
+### Option A — GUI app (easiest)
 
-**Step 2** — Copy and paste this into the chat to see all available skills, then press Enter:
+Paste this into a Claude Code chat and press Enter — a small installer window will pop up:
+
+```
+! $f="$env:TEMP\ccgui.ps1"; irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/installer-gui.ps1 -OutFile $f; Start-Process powershell "-ExecutionPolicy Bypass -WindowStyle Hidden -File `"$f`""
+```
+
+Check the skills you want and click **Install Selected** or **Install All**. Already-installed skills are labeled **[installed]**. No dependencies — uses built-in Windows tools only.
+
+### Option B — Numbered menu
+
+Paste this into a Claude Code chat and press Enter:
 
 ```
 ! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
 ```
 
-**Step 3** — Install the skill you want by pasting this, then press Enter:
-
-```
-! irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1" -Skill osha-wood-mill
-```
-
-Replace `osha-wood-mill` with the skill name you want. To install everything at once, use `-Skill all`.
-
-**Step 4** — Start a new chat. The skill is ready to use.
-
-That's it. No downloads, no setup, no configuration files.
+It will show a numbered list of available skills. Type a number and press Enter to install that skill, or type **A** to install all of them. Then start a new Claude Code chat — the skill is ready to use.
 
 ---
 

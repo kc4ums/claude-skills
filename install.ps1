@@ -1,8 +1,7 @@
 # Claude Code Skill Installer
-# Usage:
-#   List available skills:  irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
-#   Install a skill:        irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1" -Skill osha-wood-mill
-#   Install all skills:     irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1" -Skill all
+# Run interactively:  irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1"
+# Install directly:   ... & "$env:TEMP\ccinstall.ps1" -Skill osha-wood-mill
+# Install all:        ... & "$env:TEMP\ccinstall.ps1" -Skill all
 
 param(
     [string]$Skill = ""
@@ -15,61 +14,86 @@ $skillsDir = "$env:USERPROFILE\.claude\skills"
 try {
     $manifest = Invoke-RestMethod "$repo/skills.json" -ErrorAction Stop
 } catch {
-    Write-Host "ERROR: Could not fetch skills manifest. Check your internet connection." -ForegroundColor Red
+    Write-Host "ERROR: Could not fetch skills. Check your internet connection." -ForegroundColor Red
     exit 1
 }
 
-function Install-Skill($skill) {
-    $dir = "$skillsDir\$($skill.name)"
+function Install-SkillByName($name) {
+    $dir = "$skillsDir\$name"
     New-Item -ItemType Directory -Force $dir | Out-Null
-    try {
-        Invoke-WebRequest "$repo/$($skill.name)/SKILL.md" -OutFile "$dir\SKILL.md" -ErrorAction Stop
-        Write-Host "  Installed: /$($skill.name) — $($skill.description)" -ForegroundColor Green
-    } catch {
-        Write-Host "  FAILED:    $($skill.name) — could not download SKILL.md" -ForegroundColor Red
-    }
+    Invoke-WebRequest "$repo/$name/SKILL.md" -OutFile "$dir\SKILL.md" -ErrorAction Stop
 }
 
-# No skill specified — list available skills
-if (-not $Skill) {
+function Show-Menu {
     Write-Host ""
-    Write-Host "Available skills from kc4ums/claude-skills:" -ForegroundColor Cyan
+    Write-Host "Available Claude Code skills:" -ForegroundColor Cyan
     Write-Host ""
+    $i = 1
     foreach ($s in $manifest.skills) {
-        Write-Host "  /$($s.name)" -ForegroundColor Yellow -NoNewline
+        $tag = if (Test-Path "$skillsDir\$($s.name)\SKILL.md") { " [installed]" } else { "" }
+        Write-Host "  $i. /$($s.name)$tag" -ForegroundColor Yellow -NoNewline
         Write-Host " — $($s.description)"
+        $i++
     }
+    Write-Host "  A. All skills"
     Write-Host ""
-    Write-Host "To install a skill, run:" -ForegroundColor Cyan
-    Write-Host '  irm https://raw.githubusercontent.com/kc4ums/claude-skills/main/install.ps1 -OutFile "$env:TEMP\ccinstall.ps1"; & "$env:TEMP\ccinstall.ps1" -Skill <name>'
-    Write-Host ""
-    exit 0
 }
 
-# Install all
+function Do-Install($names) {
+    $ok = 0; $fail = 0
+    foreach ($name in $names) {
+        Write-Host "  Installing /$name..." -NoNewline
+        try {
+            Install-SkillByName $name
+            Write-Host " done" -ForegroundColor Green
+            $ok++
+        } catch {
+            Write-Host " FAILED" -ForegroundColor Red
+            $fail++
+        }
+    }
+    Write-Host ""
+    if ($fail -eq 0) {
+        Write-Host "Installed $ok skill(s). Start a new Claude Code chat to use them." -ForegroundColor Green
+    } else {
+        Write-Host "Installed $ok, failed $fail. Check your internet connection." -ForegroundColor Red
+    }
+    Write-Host ""
+}
+
+# ── Direct install (non-interactive) ─────────────────────────────────────────
 if ($Skill -eq "all") {
-    Write-Host ""
-    Write-Host "Installing all skills to $skillsDir ..." -ForegroundColor Cyan
-    foreach ($s in $manifest.skills) {
-        Install-Skill $s
-    }
-    Write-Host ""
-    Write-Host "Done. Start a new Claude Code conversation to use your skills." -ForegroundColor Green
+    Show-Menu
+    Do-Install ($manifest.skills | ForEach-Object { $_.name })
     exit 0
 }
 
-# Install one specific skill
-$match = $manifest.skills | Where-Object { $_.name -eq $Skill }
-if (-not $match) {
-    Write-Host ""
-    Write-Host "ERROR: Skill '$Skill' not found. Run without -Skill to see available skills." -ForegroundColor Red
-    Write-Host ""
-    exit 1
+if ($Skill) {
+    $match = $manifest.skills | Where-Object { $_.name -eq $Skill }
+    if (-not $match) {
+        Write-Host "ERROR: Skill '$Skill' not found. Run without -Skill to see available skills." -ForegroundColor Red
+        exit 1
+    }
+    Do-Install @($Skill)
+    exit 0
 }
 
+# ── Interactive numbered menu ─────────────────────────────────────────────────
+Show-Menu
+$choice = Read-Host "Enter a number or A to install all"
+
+if ($choice -match "^[Aa]$") {
+    Do-Install ($manifest.skills | ForEach-Object { $_.name })
+    exit 0
+}
+
+$idx = $null
+if ([int]::TryParse($choice, [ref]$idx) -and $idx -ge 1 -and $idx -le $manifest.skills.Count) {
+    $selected = $manifest.skills[$idx - 1]
+    Do-Install @($selected.name)
+    exit 0
+}
+
+Write-Host "Invalid choice. Run the script again and enter a number from the list." -ForegroundColor DarkOrange
 Write-Host ""
-Write-Host "Installing to $skillsDir ..." -ForegroundColor Cyan
-Install-Skill $match
-Write-Host ""
-Write-Host "Done. Start a new Claude Code conversation to use /$($match.name)." -ForegroundColor Green
-Write-Host ""
+exit 1
