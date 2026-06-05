@@ -45,9 +45,15 @@ git clone https://github.com/kc4ums/claude-skills.git ~/.claude/skills
 git clone https://github.com/kc4ums/claude-skills.git "$env:USERPROFILE\.claude\skills"
 ```
 
-### Step 3 — Restart Claude Code
+### Step 3 — Start a new conversation in Claude Code
 
-Close and reopen Claude Code (or start a new conversation). The skill will appear automatically.
+That's it — no commands to run, no configuration needed. Claude Code automatically scans the `skills` folder at the start of each conversation. Once the file is in place:
+
+1. Open Claude Code and start a new chat
+2. Type `/bible-verses` followed by how you're feeling
+3. Claude will respond with 5 verses — right in the chat, no Python, no API key setup required
+
+> **Note:** The skill only needs to be installed once. It will be available in every future conversation automatically.
 
 ---
 
